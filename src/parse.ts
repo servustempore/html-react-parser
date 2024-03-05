@@ -1,5 +1,5 @@
 import htmlToDOM from 'html-dom-parser/lib/server/html-to-dom';
-import domToReact from './dom-to-react';
+import { domToReact } from './dom-to-react';
 import { HTMLReactParserOptions } from './types';
 
 const domParserOptions = { lowerCaseAttributeNames: false } as const;

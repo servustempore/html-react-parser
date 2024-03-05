@@ -1,7 +1,7 @@
-import htmlToDOM from 'html-dom-parser';
+import htmlToDom from 'html-dom-parser/lib/server/html-to-dom';
 
-import attributesToProps from './attributes-to-props';
-import domToReact from './dom-to-react';
+export * from './attributes-to-props';
+export * from './dom-to-react';
 
 import type { HTMLReactParserOptions } from './types';
 
@@ -9,6 +9,6 @@ export { Comment, Element, ProcessingInstruction, Text } from 'domhandler';
 export type { DOMNode } from 'html-dom-parser';
 
 export type { HTMLReactParserOptions };
-export { attributesToProps, domToReact, htmlToDOM };
+export const htmlToDOM = htmlToDom;
 
 export { HTMLReactParser } from './parse';

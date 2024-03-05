@@ -18,6 +18,6 @@ export type Props = Record<PropertyKey, string | boolean> & {
  * @param nodeName - DOM node name.
  * @returns - React props.
  */
-export default function attributesToProps(attributes?: Attributes, nodeName?: string): Props;
+export declare function attributesToProps(attributes?: Attributes, nodeName?: string): Props;
 export {};
 //# sourceMappingURL=attributes-to-props.d.ts.map

@@ -1,6 +1,6 @@
 import htmlToDOM from 'html-dom-parser';
 
-import domToReact from '../src/dom-to-react';
+import { domToReact } from '../src/dom-to-react';
 import * as utilities from '../src/utilities';
 import { Element, type DOMNode, type HTMLReactParserOptions } from '../src';
 

@@ -8,5 +8,5 @@ import type { HTMLReactParserOptions } from './types';
  * @param options - Options.
  * @returns - String or JSX element(s).
  */
-export default function domToReact(nodes: DOMNode[], options?: HTMLReactParserOptions): string | JSX.Element | JSX.Element[];
+export declare function domToReact(nodes: DOMNode[], options?: HTMLReactParserOptions): string | JSX.Element | JSX.Element[];
 //# sourceMappingURL=dom-to-react.d.ts.map

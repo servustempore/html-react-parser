@@ -1,4 +1,4 @@
-import attributesToProps, { type Attributes } from '../src/attributes-to-props';
+import { type Attributes, attributesToProps } from '../src/attributes-to-props';
 import * as utilities from '../src/utilities';
 
 it('returns empty object is argument is undefined', () => {

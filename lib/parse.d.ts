@@ -1,4 +1,4 @@
-import domToReact from './dom-to-react';
+import { domToReact } from './dom-to-react';
 import { HTMLReactParserOptions } from './types';
 /**
  * Converts HTML string to React elements.

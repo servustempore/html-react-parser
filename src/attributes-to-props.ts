@@ -41,7 +41,7 @@ export type Props = Record<PropertyKey, string | boolean> & {
  * @param nodeName - DOM node name.
  * @returns - React props.
  */
-export default function attributesToProps(
+export function attributesToProps(
   attributes: Attributes = {},
   nodeName?: string,
 ): Props {

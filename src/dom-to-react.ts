@@ -2,7 +2,7 @@ import { cloneElement, createElement, isValidElement } from 'react';
 import type { JSX } from 'react';
 import type { Element, DOMNode, Text } from 'html-dom-parser';
 
-import attributesToProps from './attributes-to-props';
+import { attributesToProps } from './attributes-to-props';
 import type { Props } from './attributes-to-props';
 import {
   PRESERVE_CUSTOM_ATTRIBUTES,
@@ -27,7 +27,7 @@ const React = {
  * @param options - Options.
  * @returns - String or JSX element(s).
  */
-export default function domToReact(
+export function domToReact(
   nodes: DOMNode[],
   options: HTMLReactParserOptions = {},
 ): string | JSX.Element | JSX.Element[] {
