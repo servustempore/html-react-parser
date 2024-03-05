@@ -2,21 +2,22 @@ import * as domhandler from 'domhandler';
 import type { Element } from 'html-dom-parser';
 
 import * as HTMLReactParser from '../src';
-import parse from '../src';
 import { html, svg } from './data';
 import { render } from './helpers';
 
 describe('module', () => {
-  it('exports default', () => {
-    expect(parse).toBeInstanceOf(Function);
-  });
+  // it('exports default', () => {
+  //   expect(HTMLReactParser.HTMLReactParser as any).toBeInstanceOf(Function);
+  // });
 
-  it.each(['default', 'attributesToProps', 'domToReact', 'htmlToDOM'] as const)(
-    'exports %p',
-    (key) => {
-      expect(HTMLReactParser[key]).toBeInstanceOf(Function);
-    },
-  );
+  it.each([
+    'HTMLReactParser',
+    'attributesToProps',
+    'domToReact',
+    'htmlToDOM',
+  ] as const)('exports %p', (key) => {
+    expect(HTMLReactParser[key]).toBeInstanceOf(Function);
+  });
 
   it.each(['Comment', 'Element', 'ProcessingInstruction', 'Text'] as const)(
     'exports %s',
@@ -34,22 +35,22 @@ describe('HTMLReactParser', () => {
     'throws error for value: %p',
     (value) => {
       expect(() => {
-        parse(value as string);
+        HTMLReactParser.HTMLReactParser(value as string);
       }).toThrow(TypeError);
     },
   );
 
   it('parses "" to []', () => {
-    expect(parse('')).toEqual([]);
+    expect(HTMLReactParser.HTMLReactParser('')).toEqual([]);
   });
 
   it("returns string if it's not HTML", () => {
     const string = 'text';
-    expect(parse(string)).toBe(string);
+    expect(HTMLReactParser.HTMLReactParser(string)).toBe(string);
   });
 
   it('parses single HTML element', () => {
-    expect(parse(html.single)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(html.single)).toMatchInlineSnapshot(`
       <p>
         foo
       </p>
@@ -58,7 +59,8 @@ describe('HTMLReactParser', () => {
 
   it('parses single HTML element with comment', () => {
     // comment should be ignored
-    expect(parse(html.single + html.comment)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(html.single + html.comment))
+      .toMatchInlineSnapshot(`
       <p>
         foo
       </p>
@@ -66,7 +68,8 @@ describe('HTMLReactParser', () => {
   });
 
   it('parses multiple HTML elements', () => {
-    expect(parse(html.multiple)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(html.multiple))
+      .toMatchInlineSnapshot(`
       [
         <p>
           foo
@@ -79,7 +82,8 @@ describe('HTMLReactParser', () => {
   });
 
   it('parses complex HTML with doctype', () => {
-    expect(parse(html.doctype + html.complex)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(html.doctype + html.complex))
+      .toMatchInlineSnapshot(`
       <html>
         <head>
           <meta
@@ -138,15 +142,19 @@ describe('HTMLReactParser', () => {
   });
 
   it('parses empty <script>', () => {
-    expect(parse('<script></script>')).toMatchInlineSnapshot(`<script />`);
+    expect(
+      HTMLReactParser.HTMLReactParser('<script></script>'),
+    ).toMatchInlineSnapshot(`<script />`);
   });
 
   it('parses empty <style>', () => {
-    expect(parse('<style></style>')).toMatchInlineSnapshot(`<style />`);
+    expect(
+      HTMLReactParser.HTMLReactParser('<style></style>'),
+    ).toMatchInlineSnapshot(`<style />`);
   });
 
   it('parses form', () => {
-    expect(parse(html.form)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(html.form)).toMatchInlineSnapshot(`
       <input
         defaultChecked={true}
         defaultValue="foo"
@@ -156,7 +164,7 @@ describe('HTMLReactParser', () => {
   });
 
   it('parses list', () => {
-    expect(parse(html.list)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(html.list)).toMatchInlineSnapshot(`
       <ol>
         <li>
           One
@@ -171,7 +179,8 @@ describe('HTMLReactParser', () => {
   });
 
   it('parses template', () => {
-    expect(parse(html.template)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(html.template))
+      .toMatchInlineSnapshot(`
       <template>
         <article>
           <p>
@@ -183,7 +192,7 @@ describe('HTMLReactParser', () => {
   });
 
   it('parses SVG', () => {
-    expect(parse(svg.complex)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(svg.complex)).toMatchInlineSnapshot(`
       <svg
         height="400"
         width="450"
@@ -230,12 +239,14 @@ describe('HTMLReactParser', () => {
   it('decodes HTML entities', () => {
     const encodedEntities = 'asdf &amp; &yuml; &uuml; &apos;';
     const decodedEntities = "asdf & ÿ ü '";
-    const reactElement = parse('<i>' + encodedEntities + '</i>') as JSX.Element;
+    const reactElement = HTMLReactParser.HTMLReactParser(
+      '<i>' + encodedEntities + '</i>',
+    ) as JSX.Element;
     expect(reactElement.props.children).toBe(decodedEntities);
   });
 
   it('escapes tags inside of <title>', () => {
-    expect(parse(html.title)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser(html.title)).toMatchInlineSnapshot(`
       <title>
         &lt;em&gt;text&lt;/em&gt;
       </title>
@@ -246,7 +257,7 @@ describe('HTMLReactParser', () => {
 describe('replace option', () => {
   it('replaces the element if a valid React element is returned', () => {
     expect(
-      parse(html.complex, {
+      HTMLReactParser.HTMLReactParser(html.complex, {
         replace(domNode) {
           if ((domNode as Element).name === 'title') {
             return <title>Replaced Title</title>;
@@ -313,7 +324,7 @@ describe('replace option', () => {
 
   it('does not replace the element if an invalid React element is returned', () => {
     expect(
-      parse(html.complex, {
+      HTMLReactParser.HTMLReactParser(html.complex, {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         replace(domNode) {
@@ -389,7 +400,9 @@ describe('library option', () => {
   const React = require('react');
 
   it('converts with Preact instead of React', () => {
-    const parsedElement = parse(html.single, { library: Preact });
+    const parsedElement = HTMLReactParser.HTMLReactParser(html.single, {
+      library: Preact,
+    });
     const preactElement = Preact.createElement('p', {}, 'foo');
     expect(React.isValidElement(parsedElement)).toBe(false);
     expect(Preact.isValidElement(parsedElement)).toBe(true);
@@ -408,7 +421,8 @@ describe('htmlparser2 option', () => {
     // which causes elements to nest instead of being rendered correctly
     // enabling htmlparser2 option xmlMode resolves this issue
     const options = { htmlparser2: { xmlMode: true } };
-    expect(parse('<ul><li/><li/></ul>', options)).toMatchInlineSnapshot(`
+    expect(HTMLReactParser.HTMLReactParser('<ul><li/><li/></ul>', options))
+      .toMatchInlineSnapshot(`
       <ul>
         <li />
         <li />
@@ -424,7 +438,7 @@ describe('trim option', () => {
     <tr><td>hello</td><td>\n</td><td>&nbsp;</td>\t</tr>\r
   </tbody>
 </table>`;
-    const reactElement = parse(html) as JSX.Element;
+    const reactElement = HTMLReactParser.HTMLReactParser(html) as JSX.Element;
     expect(render(reactElement)).toBe(
       '<table><tbody><tr><td>hello</td><td>\n</td><td>\u00a0</td></tr></tbody></table>',
     );
@@ -452,7 +466,10 @@ describe('trim option', () => {
     const html = `<table>
       <tbody><tr><td> text </td><td> </td>\t</tr>\r</tbody>\n</table>`;
     const options = { trim: true };
-    const reactElement = parse(html, options) as JSX.Element;
+    const reactElement = HTMLReactParser.HTMLReactParser(
+      html,
+      options,
+    ) as JSX.Element;
     expect(render(reactElement)).toBe(
       '<table><tbody><tr><td> text </td><td></td></tr></tbody></table>',
     );
@@ -462,7 +479,7 @@ describe('trim option', () => {
 describe('invalid styles', () => {
   it('copes with invalid styles', () => {
     const html = '<p style="font - size: 1em">X</p>';
-    const reactElement = parse(html) as JSX.Element;
+    const reactElement = HTMLReactParser.HTMLReactParser(html) as JSX.Element;
     expect(render(reactElement)).toBe('<p>X</p>');
   });
 });

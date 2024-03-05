@@ -36,5 +36,3 @@ export function HTMLReactParser(
     options,
   );
 }
-
-export default HTMLReactParser;

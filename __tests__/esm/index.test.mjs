@@ -3,7 +3,7 @@ import { describe, it } from 'node:test';
 import assert from 'assert';
 import { isValidElement } from 'react';
 
-import parse, {
+import {
   Comment,
   Element,
   ProcessingInstruction,
@@ -11,15 +11,16 @@ import parse, {
   attributesToProps,
   domToReact,
   htmlToDOM,
+  HTMLReactParser,
 } from '../../esm/index.mjs';
 
 describe('index', () => {
-  it('exports "parse" function', () => {
-    assert.strictEqual(typeof parse, 'function');
+  it('exports "HTMLReactParser" function', () => {
+    assert.strictEqual(typeof HTMLReactParser, 'function');
   });
 
   it('parses HTML to React element', () => {
-    assert.ok(isValidElement(parse('<p>text</p>')));
+    assert.ok(isValidElement(HTMLReactParser('<p>text</p>')));
   });
 
   it('exports "attributesToProps" function', () => {
