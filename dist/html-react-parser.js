@@ -1032,11 +1032,11 @@
 	}
 	utilities$2.formatDOM = formatDOM;
 
-	var __importDefault$3 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+	var __importDefault$4 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(htmlToDom, "__esModule", { value: true });
-	var domparser_1 = __importDefault$3(domparser$1);
+	var domparser_1 = __importDefault$4(domparser$1);
 	var utilities_1$3 = utilities$2;
 	var DIRECTIVE_REGEX = /<(![a-zA-Z\s]+)>/; // e.g., <!doctype html>
 	/**
@@ -2342,11 +2342,11 @@
 	  return str ? str.replace(TRIM_REGEX, EMPTY_STRING) : EMPTY_STRING;
 	}
 
-	var __importDefault$2 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+	var __importDefault$3 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(cjs, "__esModule", { value: true });
-	var inline_style_parser_1 = __importDefault$2(inlineStyleParser);
+	var inline_style_parser_1 = __importDefault$3(inlineStyleParser);
 	/**
 	 * Parses inline style to object.
 	 *
@@ -2433,11 +2433,11 @@
 	};
 	utilities.camelCase = camelCase;
 
-	var __importDefault$1 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+	var __importDefault$2 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(cjs$1, "__esModule", { value: true });
-	var style_to_object_1 = __importDefault$1(cjs);
+	var style_to_object_1 = __importDefault$2(cjs);
 	var utilities_1$2 = utilities;
 	/**
 	 * Parses CSS inline style to JavaScript object (camelCased).
@@ -2637,12 +2637,12 @@
 
 	var domToReact$1 = {};
 
-	var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+	var __importDefault$1 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(domToReact$1, "__esModule", { value: true });
 	var react_1 = require$$0;
-	var attributes_to_props_1 = __importDefault(attributesToProps$1);
+	var attributes_to_props_1 = __importDefault$1(attributesToProps$1);
 	var utilities_1 = utilities$1;
 	var React = {
 	    cloneElement: react_1.cloneElement,
@@ -2758,6 +2758,33 @@
 	        (0, utilities_1.isCustomComponent)(node.name, node.attribs));
 	}
 
+	var parse$1 = {};
+
+	var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+	    return (mod && mod.__esModule) ? mod : { "default": mod };
+	};
+	Object.defineProperty(parse$1, "__esModule", { value: true });
+	var html_dom_parser_1 = __importDefault(htmlToDom);
+	var dom_to_react_1 = __importDefault(domToReact$1);
+	var domParserOptions = { lowerCaseAttributeNames: false };
+	/**
+	 * Converts HTML string to React elements.
+	 *
+	 * @param html - HTML string.
+	 * @param options - Parser options.
+	 * @returns - React element(s), empty array, or string.
+	 */
+	function HTMLReactParser$1(html, options) {
+	    if (typeof html !== 'string') {
+	        throw new TypeError('First argument must be a string');
+	    }
+	    if (!html) {
+	        return [];
+	    }
+	    return (0, dom_to_react_1.default)((0, html_dom_parser_1.default)(html, (options === null || options === void 0 ? void 0 : options.htmlparser2) || domParserOptions), options);
+	}
+	parse$1.default = HTMLReactParser$1;
+
 	(function (exports) {
 		var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
 		    return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -2770,29 +2797,13 @@
 		exports.attributesToProps = attributes_to_props_1.default;
 		var dom_to_react_1 = __importDefault(domToReact$1);
 		exports.domToReact = dom_to_react_1.default;
+		var parse_1 = __importDefault(parse$1);
+		exports.HTMLReactParser = parse_1.default;
 		var domhandler_1 = lib$2;
 		Object.defineProperty(exports, "Comment", { enumerable: true, get: function () { return domhandler_1.Comment; } });
 		Object.defineProperty(exports, "Element", { enumerable: true, get: function () { return domhandler_1.Element; } });
 		Object.defineProperty(exports, "ProcessingInstruction", { enumerable: true, get: function () { return domhandler_1.ProcessingInstruction; } });
 		Object.defineProperty(exports, "Text", { enumerable: true, get: function () { return domhandler_1.Text; } });
-		var domParserOptions = { lowerCaseAttributeNames: false };
-		/**
-		 * Converts HTML string to React elements.
-		 *
-		 * @param html - HTML string.
-		 * @param options - Parser options.
-		 * @returns - React element(s), empty array, or string.
-		 */
-		function HTMLReactParser(html, options) {
-		    if (typeof html !== 'string') {
-		        throw new TypeError('First argument must be a string');
-		    }
-		    if (!html) {
-		        return [];
-		    }
-		    return (0, dom_to_react_1.default)((0, html_dom_parser_1.default)(html, (options === null || options === void 0 ? void 0 : options.htmlparser2) || domParserOptions), options);
-		}
-		exports.HTMLReactParser = HTMLReactParser;
 		
 	} (lib$3));
 
