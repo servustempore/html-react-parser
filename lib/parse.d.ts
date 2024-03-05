@@ -7,5 +7,5 @@ import { HTMLReactParserOptions } from './types';
  * @param options - Parser options.
  * @returns - React element(s), empty array, or string.
  */
-export default function HTMLReactParser(html: string, options?: HTMLReactParserOptions): ReturnType<typeof domToReact>;
+export declare function HTMLReactParser(html: string, options?: HTMLReactParserOptions): ReturnType<typeof domToReact>;
 //# sourceMappingURL=parse.d.ts.map

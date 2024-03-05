@@ -1,4 +1,4 @@
-import htmlToDOM from 'html-dom-parser';
+import htmlToDOM from 'html-dom-parser/lib/server/html-to-dom';
 import domToReact from './dom-to-react';
 import { HTMLReactParserOptions } from './types';
 
@@ -10,7 +10,7 @@ const domParserOptions = { lowerCaseAttributeNames: false } as const;
  * @param options - Parser options.
  * @returns - React element(s), empty array, or string.
  */
-export default function HTMLReactParser(
+export function HTMLReactParser(
   html: string,
   options?: HTMLReactParserOptions,
 ): ReturnType<typeof domToReact> {
