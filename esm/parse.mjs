@@ -1,3 +1,1 @@
-import parse from '../lib/parse.js';
-
-export default parse.default || parse;
+export { HTMLReactParser } from '../src/parse';
