@@ -6633,7 +6633,7 @@
 	    if (!html) {
 	        return [];
 	    }
-	    return (0, dom_to_react_1.default)((0, html_to_dom_1.default)(html, (options === null || options === void 0 ? void 0 : options.htmlparser2) || domParserOptions), options);
+	    return (0, dom_to_react_1.default)((0, html_to_dom_1.default)(html, ((options === null || options === void 0 ? void 0 : options.htmlparser2) || domParserOptions)), options);
 	}
 	parse$1.HTMLReactParser = HTMLReactParser$1;
 
