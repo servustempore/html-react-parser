@@ -23,7 +23,7 @@ export function HTMLReactParser(
   }
 
   return domToReact(
-    htmlToDOM(html, options?.htmlparser2 || domParserOptions),
+    htmlToDOM(html, (options?.htmlparser2 || domParserOptions) as any),
     options,
   );
 }
