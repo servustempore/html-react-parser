@@ -17,5 +17,6 @@
     "no-console": "error",
     "no-debugger": "error",
     "prettier/prettier": "error"
-  }
+  },
+  "ignorePatterns": ["lib/**", "dist/**"]
 }
